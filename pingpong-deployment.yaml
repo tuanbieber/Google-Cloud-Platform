@@ -20,7 +20,7 @@ spec:
             - name: DB_USER
               value: "root"
             - name: DB_PASS
-              value: ">c2r}0dZ&?RVe/@s"
+              value: "change me"
             - name: DB_NAME
               value: "saigoncoder"
             - name: INSTANCE_CONNECTION_NAME
