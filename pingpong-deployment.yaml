@@ -15,16 +15,18 @@ spec:
       serviceAccountName: default # Replace if using custom K8s service account for Workload Identity
       containers:
         - name: pingpong-server-container
-          image: tuanbieber/pingpong-server:v1.1.17
+          image: tuanbieber/pingpong-server:v1.1.37
           env:
             - name: DB_USER
-              value: "root"
+              value: "729560812361-compute"
             - name: DB_PASS
-              value: "change me"
+              value: ""
             - name: DB_NAME
               value: "saigoncoder"
             - name: INSTANCE_CONNECTION_NAME
               value: "imposing-water-423814-u0:asia-southeast1:saigoncoder-mysql-8"
+            - name: PRIVATE_IP
+              value: "10.19.0.3"
           resources:
             requests:
               cpu: "30m"
@@ -32,15 +34,8 @@ spec:
             limits:
               cpu: "250m"
               memory: "512Mi"
-          volumeMounts:
-            - name: cloudsql
-              mountPath: /cloudsql
         - name: cloud-sql-proxy
           image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:latest
-          volumeMounts:
-            - name: cloudsql
-              mountPath: /cloudsql
-          # Ensure the service account used by the GKE node has the "Cloud SQL Client" role
           securityContext:
             runAsNonRoot: true
           args:
@@ -54,6 +49,3 @@ spec:
             limits:
               cpu: "100m"
               memory: "256Mi"
-      volumes:
-        - name: cloudsql
-          emptyDir: {}
